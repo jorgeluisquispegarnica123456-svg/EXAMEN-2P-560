@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        //
+    }
+
+    public function boot(): void
+    {
+        // ✅ Forzar HTTPS en Codespaces
+        if (env('APP_ENV') !== 'local') {
+            URL::forceScheme('https');
+        }
+        
+        // ✅ Forzar la URL completa de Codespaces
+        $appUrl = env('APP_URL');
+        if (!empty($appUrl)) {
+            URL::forceRootUrl($appUrl);
+        }
+    }
+}
